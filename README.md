@@ -33,7 +33,7 @@ Once you think your keyboard has blinked enough, you can stop it by removing
 the module from the kernel (which will restore the keyboard LEDs state):
 
     :::console
-    $ rmmod keyboard_blink
+    # rmmod keyboard_blink
 
 Feel free to hack around (you can change blinking frequency for example by
 editing the source code of the module).

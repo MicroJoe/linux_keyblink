@@ -35,22 +35,24 @@ char kbledstatus = 0;
  * keyboard.
  */
 
-#define ALL_LEDS_ON  0x04
-#define ALL_LEDS_OFF 0x02
+static unsigned char LED_ANIM[] = { 0x04, 0x02, 0x01 };
+
 #define RESTORE_LEDS 0xFF /* Restore all the LEDs to their status state */
 
 static void my_timer_func(unsigned long ptr)
 {
 	int *pstatus = (int *) ptr;
+	int state = LED_ANIM[*pstatus];
 
 	/* Switch the LED state */
-	if (*pstatus == ALL_LEDS_ON)
-		*pstatus = ALL_LEDS_OFF;
-	else
-		*pstatus = ALL_LEDS_ON;
+	if (*pstatus < sizeof(LED_ANIM) / sizeof(LED_ANIM[0])) {
+		*pstatus += 1;
+	} else {
+		*pstatus = 0;
+	}
 
 	/* Call ioctl on the driver in order to update the LED state */
-	((my_driver->ops)->ioctl) (vc_cons[fg_console].d->port.tty, KDSETLED, *pstatus);
+	((my_driver->ops)->ioctl) (vc_cons[fg_console].d->port.tty, KDSETLED, state);
 
 	/* Update the timer in order to call this function again */
 	my_timer.expires = jiffies + BLINK_DELAY;

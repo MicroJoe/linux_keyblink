@@ -49,8 +49,8 @@ There are actually two important bugs in this software:
 
 ## Copyright
 
-This project is brought to you under WTFPL. For further informations please
-read the provided COPYING file.
+This project is brought to you under the GNU General Public License version 3
+or later. For further informations please read the provided COPYING file.
 
 ## Reference
 
